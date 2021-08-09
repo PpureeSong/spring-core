@@ -3,7 +3,10 @@ package hello.springcore.order;
 import hello.springcore.discount.DiscountPolicy;
 import hello.springcore.member.Member;
 import hello.springcore.member.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 // 의존관계에 대한 고민은 외부(AppConfig)에 맡기고 실행에만 집중
 public class OrderServiceImpl implements OrderService {
 
@@ -11,6 +14,7 @@ public class OrderServiceImpl implements OrderService {
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
+    @Autowired // 생성자 위에 애노테이션 설정을 해주면 의존관계를 자동으로 주입
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
