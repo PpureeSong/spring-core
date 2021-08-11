@@ -1,14 +1,17 @@
 package hello.springcore.order;
 
+import hello.springcore.annotaion.MainDiscountPolicy;
 import hello.springcore.discount.DiscountPolicy;
 import hello.springcore.member.Member;
 import hello.springcore.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+@Qualifier
 @Component
-@RequiredArgsConstructor // 필수값인 final이 붙은 필드를 파라미터로 받는 생성자를 만들어줌
+//@RequiredArgsConstructor // 필수값인 final이 붙은 필드를 파라미터로 받는 생성자를 만들어줌
 // 의존관계에 대한 고민은 외부(AppConfig)에 맡기고 실행에만 집중
 public class OrderServiceImpl implements OrderService {
 
@@ -25,11 +28,11 @@ public class OrderServiceImpl implements OrderService {
      *   - 주입 방지 : 주입 데이터를 누락했을 때 컴파일 오류 발생
      *   - final 키워드를 사용할 수 있음
      */
-//    @Autowired
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
