@@ -15,14 +15,19 @@ public class LogDemoController {
 
     private final LogDemoService logDemoService;
     // ObjectProvider : 호출하는 시점까지 request scope 빈의 생성을 지연 할 수 있음
-    private final ObjectProvider<MyLogger> myLoggerProvider;
+//    private final ObjectProvider<MyLogger> myLoggerProvider;
+
+    private final MyLogger myLogger;
+
 
     @RequestMapping("log-demo")
     @ResponseBody
     public String logDemo(HttpServletRequest request) {
         String requestURL = request.getRequestURL().toString();
 
-        MyLogger myLogger = myLoggerProvider.getObject();
+        System.out.println("myLogger = " + myLogger.getClass());
+
+//        MyLogger myLogger = myLoggerProvider.getObject();
         myLogger.setRequestURL(requestURL);
 
         myLogger.log("controller test");
